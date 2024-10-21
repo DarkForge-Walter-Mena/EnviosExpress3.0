@@ -1,0 +1,66 @@
+A continuación, se describen los puntos a evaluar con su respectiva escala de calificación:
+
+Las calificaciones posibles por cada elemento a ser evaluado dentro del proyecto son:
+EXCELENTE (100% del Punteo): Cumple al 100% con la solución debidamente aplicada.
+BUENO (80% del Punteo): Cumple a un 80% con la solución debidamente aplicada.
+ACEPTABLE (60% del Punteo): Cumple a un 60% con la solución debidamente aplicada.
+DEFICIENTE (40% del Punteo): Cumple a un 40% con la solución debidamente aplicada.
+NO ACEPTABLE (10% del Punteo): Cumple con menos del 40% con la solución debidamente aplicada.
+ 
+
+El proyecto final será evaluado sobre 15 puntos. A continuación, se detallan los elementos a ser evaluados a detalle con su respectiva ponderación:
+FORMATO DE ENTREGA DE LA DOCUMENTACIÓN:
+
+Debe de cumplir el siguiente esquema:
+
+Carátula
+Índice
+Introducción
+Procesos Críticos
+Diagrama de entidad relacion
+Diagrama de procesos Proceso A, Proceso B, Proceso C
+Análisis de Riesgos
+TECNOLOGIA DONDE APLICARA EL DESARROLLO
+Conclusiones
+Bibliografía
+Anexos
+ 
+
+El documento debe de cumplir con los siguientes aspectos:
+
+El tipo de hoja que se emplea en cuanto al tamaño son las denominadas “tamaño carta”. Solo se escribe una cara de la hoja.
+El tipo de letra es Arial, tamaño 12 normal.
+El interlineado es de 1,5 para todo el texto.
+Las sangrías en el primer renglón de cada párrafo cumplen la función de destacarlos visualmente. Se expresan con un número de 5 espacios.
+Los márgenes son de: 3,5 cm para el margen izquierdo y 2,5 cm para el derecho; y 3 cm para los márgenes superior e inferior.
+Todas las páginas del trabajo deben estar numeradas, excepto la portada y el índice. La numeración que se usa es la arábiga y la posición es el ángulo superior derecho.
+Tanto las citas bibliográficas como el listado de bibliografía, deberán apegarse a las normas de la Asociación Americana de Psicología (APA, por sus siglas en idioma inglés), teniendo el cuidado de consultar la última edición en idioma español.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+Correcciones que me dieron al presentar el primer bosquejo
+
+
+30-50% O PROTOTIPO DE PROGRA, logeo y 3 o 4 mantenimientos, guardar cliente, guardar producto, guardar catálogo
+
+EL 100% DE LA BASE - Logística, procedimientos, consultas, relaciones, triggers, usuarios, bitácoras de control, documentación. En otras palabras todo.
+
+PROTECCIÓN  
+CONTROL  
+CREACIÓN
+
+
+CONTROL DE Usuario
+CONTROL DE CLIENTE
+CONTROL DE QUIEN MANEJA CONDUCTOR
+TIPO DEL UBER  
+DIRECCIÓN  
+PRECIO  
+LOCALIDAD  
+VEHÍCULOS
