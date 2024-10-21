@@ -1,0 +1,200 @@
+CREATE DATABASE UberEatsDB;
+GO
+
+USE UberEatsDB;
+GO
+
+
+-- Tabla de Empresas
+CREATE TABLE Empresa (
+    EmpresaID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100),
+);
+
+-- Tabla de Clientes
+CREATE TABLE Clientes (
+    ClienteID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100),
+    Apellido NVARCHAR(100),
+    Correo NVARCHAR(100) UNIQUE,
+    Telefono NVARCHAR(15),
+    Direccion NVARCHAR(255),
+    FechaRegistro DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Restaurantes
+CREATE TABLE Restaurantes (
+    RestauranteID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100),
+    Direccion NVARCHAR(255),
+    Telefono NVARCHAR(15),
+    Correo NVARCHAR(100),
+    Categoria NVARCHAR(50),
+    FechaRegistro DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Conductores
+CREATE TABLE Conductores (
+    ConductorID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100),
+    Apellido NVARCHAR(100),
+    Telefono NVARCHAR(15),
+    PlacaVehiculo NVARCHAR(10),
+    TipoVehiculo NVARCHAR(50),
+    FechaRegistro DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Productos
+CREATE TABLE Productos (
+    ProductoID INT PRIMARY KEY IDENTITY(1,1),
+    RestauranteID INT FOREIGN KEY REFERENCES Restaurantes(RestauranteID),
+    Nombre NVARCHAR(100),
+    Descripcion NVARCHAR(255),
+    Precio DECIMAL(10,2),
+    Disponible BIT DEFAULT 1
+);
+
+-- Tabla de Pedidos
+CREATE TABLE Pedidos (
+    PedidoID INT PRIMARY KEY IDENTITY(1,1),
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    RestauranteID INT FOREIGN KEY REFERENCES Restaurantes(RestauranteID),
+    ConductorID INT FOREIGN KEY REFERENCES Conductores(ConductorID),
+    Estado NVARCHAR(50),
+    MontoTotal DECIMAL(10,2),
+    FechaPedido DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Detalle de Pedido
+CREATE TABLE DetallePedido (
+    DetalleID INT PRIMARY KEY IDENTITY(1,1),
+    PedidoID INT FOREIGN KEY REFERENCES Pedidos(PedidoID),
+    ProductoID INT FOREIGN KEY REFERENCES Productos(ProductoID),
+    Cantidad INT,
+    Precio DECIMAL(10,2),
+    Subtotal AS (Cantidad * Precio)
+);
+
+-- Tabla de Pagos
+CREATE TABLE Pagos (
+    PagoID INT PRIMARY KEY IDENTITY(1,1),
+    PedidoID INT FOREIGN KEY REFERENCES Pedidos(PedidoID),
+    MetodoPago NVARCHAR(50),
+    Monto DECIMAL(10,2),
+    Estado NVARCHAR(50),
+    FechaPago DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Categorías de Productos
+CREATE TABLE CategoriasProducto (
+    CategoriaID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100)
+);
+
+-- Tabla de Productos y Categorías
+CREATE TABLE ProductosCategorias (
+    ProductoID INT FOREIGN KEY REFERENCES Productos(ProductoID),
+    CategoriaID INT FOREIGN KEY REFERENCES CategoriasProducto(CategoriaID),
+    PRIMARY KEY (ProductoID, CategoriaID)
+);
+
+-- Tabla de Reseñas de Clientes
+CREATE TABLE ReseñasClientes (
+    ReseñaID INT PRIMARY KEY IDENTITY(1,1),
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    RestauranteID INT FOREIGN KEY REFERENCES Restaurantes(RestauranteID),
+    Calificacion INT CHECK(Calificacion BETWEEN 1 AND 5),
+    Comentario NVARCHAR(500),
+    FechaReseña DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Reseñas de Conductores
+CREATE TABLE ReseñasConductores (
+    ReseñaID INT PRIMARY KEY IDENTITY(1,1),
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    ConductorID INT FOREIGN KEY REFERENCES Conductores(ConductorID),
+    Calificacion INT CHECK(Calificacion BETWEEN 1 AND 5),
+    Comentario NVARCHAR(500),
+    FechaReseña DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Horarios de Restaurantes
+CREATE TABLE HorarioRestaurante (
+    HorarioID INT PRIMARY KEY IDENTITY(1,1),
+    RestauranteID INT FOREIGN KEY REFERENCES Restaurantes(RestauranteID),
+    DiaSemana NVARCHAR(15),
+    HoraApertura TIME,
+    HoraCierre TIME
+);
+
+-- Tabla de Promociones
+CREATE TABLE Promociones (
+    PromocionID INT PRIMARY KEY IDENTITY(1,1),
+    RestauranteID INT FOREIGN KEY REFERENCES Restaurantes(RestauranteID),
+    Descripcion NVARCHAR(255),
+    Descuento DECIMAL(5,2),
+    FechaInicio DATE,
+    FechaFin DATE
+);
+
+-- Tabla de Direcciones de Clientes
+CREATE TABLE DireccionesCliente (
+    DireccionID INT PRIMARY KEY IDENTITY(1,1),
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    Direccion NVARCHAR(255),
+    Ciudad NVARCHAR(100),
+    CodigoPostal NVARCHAR(10),
+    Pais NVARCHAR(100)
+);
+
+-- Tabla de Historial de Pedidos
+CREATE TABLE HistorialPedidos (
+    HistorialID INT PRIMARY KEY IDENTITY(1,1),
+    PedidoID INT FOREIGN KEY REFERENCES Pedidos(PedidoID),
+    EstadoAnterior NVARCHAR(50),
+    EstadoActual NVARCHAR(50),
+    FechaCambio DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Métodos de Pago de Clientes
+CREATE TABLE MetodosPagoCliente (
+    MetodoPagoID INT PRIMARY KEY IDENTITY(1,1),
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    TipoPago NVARCHAR(50),
+    NumeroTarjeta NVARCHAR(20),
+    FechaExpiracion DATE
+);
+
+-- Tabla de Notificaciones
+CREATE TABLE Notificaciones (
+    NotificacionID INT PRIMARY KEY IDENTITY(1,1),
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    Titulo NVARCHAR(100),
+    Mensaje NVARCHAR(255),
+    FechaEnvio DATETIME DEFAULT GETDATE()
+);
+
+-- Tabla de Historial de Conductores
+CREATE TABLE HistorialConductor (
+    HistorialID INT PRIMARY KEY IDENTITY(1,1),
+    ConductorID INT FOREIGN KEY REFERENCES Conductores(ConductorID),
+    PedidoID INT FOREIGN KEY REFERENCES Pedidos(PedidoID),
+    FechaEntrega DATETIME,
+    Estado NVARCHAR(50)
+);
+
+-- Tabla de Cupones de Descuento
+CREATE TABLE CuponesDescuento (
+    CuponID INT PRIMARY KEY IDENTITY(1,1),
+    Codigo NVARCHAR(50) UNIQUE,
+    Descuento DECIMAL(5,2),
+    FechaExpiracion DATE,
+    Estado NVARCHAR(50)
+);
+
+-- Tabla de Clientes y Cupones
+CREATE TABLE ClientesCupones (
+    ClienteID INT FOREIGN KEY REFERENCES Clientes(ClienteID),
+    CuponID INT FOREIGN KEY REFERENCES CuponesDescuento(CuponID),
+    PRIMARY KEY (ClienteID, CuponID)
+);
